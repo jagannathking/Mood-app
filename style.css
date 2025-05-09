@@ -1,0 +1,229 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#ad-container {
+  width: 300px;
+  height: 600px;
+  background-color: #000000; /* Prime Video black */
+  color: #ffffff;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.logo {
+  width: 120px; /* Adjusted for prime_video_logo.svg */
+  margin-bottom: 15px;
+}
+
+.tagline,
+.question {
+  font-size: 16px;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+#camera-area {
+  width: 220px; /* Match mockup aspect ratio */
+  height: 290px; /* Adjusted for a common camera aspect ratio */
+  background-color: #222;
+  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#camera-feed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures video fills the container */
+  transform: scaleX(-1); /* Mirror mode */
+}
+
+#camera-placeholder {
+  color: #777;
+  font-size: 12px;
+}
+#camera-placeholder p {
+  margin: 5px 0;
+}
+
+#scan-animation-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #00a8e1; /* Prime Video blue */
+  box-shadow: 0 0 10px #00a8e1;
+  display: none; /* Hidden initially */
+}
+
+/* Scan animation */
+.scanning #scan-animation-bar {
+  display: block;
+  animation: scan 2s linear forwards;
+}
+
+@keyframes scan {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: calc(100% - 4px);
+  }
+}
+
+.action-btn,
+.mood-btn {
+  width: 100%;
+  max-width: 220px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.action-btn {
+  background-color: #0073bb; /* Prime Video blue */
+  color: #ffffff;
+}
+.action-btn:hover {
+  background-color: #005a94;
+}
+.action-btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.link-text {
+  font-size: 12px;
+  color: #00a8e1; /* Prime Video blue */
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 5px;
+}
+.link-text:hover {
+  color: #ffffff;
+}
+
+/* Manual Mood Screen */
+#mood-buttons-container {
+  width: 100%;
+  max-width: 220px;
+  margin-bottom: 10px;
+}
+
+.mood-btn {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.mood-btn:hover {
+  background-color: #4f4f4f; /* Lighter grey from mockup */
+}
+
+.mood-btn.selected {
+  background-color: #ffffff;
+  color: #0073bb; /* Prime Video blue */
+  font-weight: bold;
+}
+
+/* Recommendation Screen */
+#mood-greeting {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+#mood-greeting #detected-mood-text {
+  color: #00a8e1; /* Prime Video blue */
+  font-weight: bold;
+}
+
+#movie-title-display {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+#movie-thumbnail-container {
+  width: 200px; /* Width of image in mockup */
+  height: auto; /* Height of image in mockup for "Welcome" ~1.5 ratio of width */
+  margin-bottom: 10px;
+  background-color: #111; /* Placeholder bg */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#movie-thumbnail {
+  max-width: 100%;
+  max-height: 280px; /* Control max height, aspect ratio maintained */
+  height: auto;
+  border: 1px solid #333;
+}
+
+#watch-now-link {
+  text-decoration: none;
+  width: 100%;
+  max-width: 220px; /* Match button width */
+  display: block; /* Ensure it takes full width for centering */
+  margin: 0 auto 10px auto; /* Center and add margin */
+}
+
+/* Loading Screen */
+#loading-text {s
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #00a8e1; /* Prime Video blue */
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

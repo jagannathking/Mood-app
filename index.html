@@ -1,78 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Video - Mood Match</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!-- GSAP for animation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-</head>
-
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prime Video Mood Ad</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
     <div id="ad-container">
-        <!-- CORRECTED LOGO URL BELOW -->
-        <img src="https://i.pinimg.com/736x/15/02/cf/1502cfefa655275fe986e7ec1f1f2e65.jpg"
-            alt="Prime Video Logo" class="prime-logo">
-
-        <!-- Screen 1: Initial Camera Access / Manual Option -->
-        <div id="camera-access-screen" class="screen active">
-            <p class="screen-title">Smile, frown, or just stare.<br>We'll find your perfect match!</p>
-            <div id="video-container" class="camera-pulse">
-                <video id="video-feed" autoplay playsinline muted></video>
-                <!-- Canvas for capturing frame (hidden) -->
-                <canvas id="canvas" style="display:none;"></canvas>
-            </div>
-            <button id="check-mood-btn" class="btn btn-primary">Check my mood</button>
-            <a href="#" id="no-pic-link">No camera? Choose your mood manually</a>
+      <!-- Screen 1: Camera & Initial Interaction -->
+      <div id="screen-camera" class="screen active">
+        <img
+          src="https://www.shutterstock.com/image-vector/chattogram-bangladesh-may-18-2023-600nw-2304763275.jpg"
+          alt="Prime Video Logo"
+          class="logo"
+        />
+        <p class="tagline">
+          Smile, frown, or just stare,<br />We will read your face!
+        </p>
+        <div id="camera-area">
+          <video id="camera-feed" autoplay playsinline muted></video>
+          <canvas id="snapshot-canvas" style="display: none"></canvas>
+          <div id="scan-animation-bar"></div>
+          <div id="camera-placeholder">
+            <p>Camera will appear here.</p>
+            <p>Allow camera access when prompted.</p>
+          </div>
         </div>
+        <button id="check-mood-btn" class="action-btn">CHECK MY MOOD</button>
+        <p id="no-pic-link" class="link-text">
+          No Pic? No problem! Choose your mood
+        </p>
+      </div>
 
-        <!-- Screen 2: Manual Mood Selection -->
-        <div id="mood-select-screen" class="screen">
-            <p class="screen-title">How would you describe your mood today?</p>
-            <ul id="mood-options-list">
-                <li><button class="btn mood-option-btn" data-mood="Happy"><span class="mood-emoji">😊</span> Happy</button></li>
-                <li><button class="btn mood-option-btn" data-mood="Excited"><span class="mood-emoji">🤩</span> Excited</button></li>
-                <li><button class="btn mood-option-btn" data-mood="Neutral"><span class="mood-emoji">😐</span> Neutral</button></li>
-                <li><button class="btn mood-option-btn" data-mood="Angry"><span class="mood-emoji">😠</span> Angry</button></li>
-                <li><button class="btn mood-option-btn" data-mood="Sad"><span class="mood-emoji">😔</span> Sad</button></li>
-            </ul>
-            <button id="submit-mood-btn" class="btn btn-primary" disabled>THIS IS MY MOOD</button>
+      <!-- Screen 2: Manual Mood Selection -->
+      <div id="screen-manual-mood" class="screen">
+        <img
+          src="https://www.shutterstock.com/image-vector/chattogram-bangladesh-may-18-2023-600nw-2304763275.jpg"
+          alt="Prime Video Logo"
+          class="logo"
+        />
+        <p class="question">How would you describe your mood?</p>
+        <div id="mood-buttons-container">
+          <button class="mood-btn" data-mood="Happy">Happy</button>
+          <button class="mood-btn" data-mood="Excited">Excited</button>
+          <button class="mood-btn" data-mood="Neutral">Neutral</button>
+          <button class="mood-btn" data-mood="Angry">Angry</button>
+          <button class="mood-btn" data-mood="Sad">Sad</button>
         </div>
+        <button id="submit-manual-mood-btn" class="action-btn" disabled>
+          THIS IS MY MOOD
+        </button>
+      </div>
 
-        <!-- Screen 3: Scanning Animation -->
-        <div id="scanning-screen" class="screen">
-            <p class="screen-title">Detecting your mood...</p>
-            <div id="scan-animation-container">
-                <img id="scan-face-placeholder" src="https://via.placeholder.com/200x250.png?text=Your+Face+Here"
-                    alt="Face Scan Area">
-                <div id="scan-bar"></div>
-            </div>
-            <div class="scanning-text">
-                <p>Please wait</p>
-                <div class="scanning-dots">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </div>
-            </div>
+      <!-- Screen 3: Recommendation -->
+      <div id="screen-recommendation" class="screen">
+        <img
+          src="https://www.shutterstock.com/image-vector/chattogram-bangladesh-may-18-2023-600nw-2304763275.jpg"
+          alt="Prime Video Logo"
+          class="logo"
+        />
+        <p id="mood-greeting">
+          Hey! You're in a <span id="detected-mood-text"></span> mood and we got
+          stories to match!
+        </p>
+        <p id="movie-title-display"></p>
+        <div id="movie-thumbnail-container">
+          <img id="movie-thumbnail" src="" alt="Movie Thumbnail" />
         </div>
+        <a id="watch-now-link" href="#" target="_blank">
+          <button id="watch-now-btn" class="action-btn">Watch Now</button>
+        </a>
+        <button id="scan-again-btn" class="action-btn">SCAN AGAIN</button>
+      </div>
 
-        <!-- Screen 4: Movie Recommendation -->
-        <div id="recommendation-screen" class="screen">
-            <p id="mood-greeting" class="screen-title">You're in a <span id="detected-mood-text"></span> mood.<br>Here's your perfect match!</p>
-            <div class="recommendation-container">
-                <span class="prime-badge">PRIME EXCLUSIVE</span>
-                <img id="movie-thumbnail" src="" alt="Movie Thumbnail">
-                <h3 id="movie-title"></h3>
-                <div class="button-container">
-                    <a id="watch-now-link" href="#" target="_blank" class="btn btn-primary">WATCH NOW</a>
-                    <button id="scan-again-btn" class="btn btn-secondary">TRY AGAIN</button>
-                </div>
-            </div>
-        </div>
+      <!-- Screen 4: Loading/Processing -->
+      <div id="screen-loading" class="screen">
+        <img
+          src="https://www.shutterstock.com/image-vector/chattogram-bangladesh-may-18-2023-600nw-2304763275.jpg"
+          alt="Prime Video Logo"
+          class="logo"
+        />
+        <p id="loading-text">Analyzing your mood...</p>
+        <div class="spinner"></div>
+      </div>
     </div>
 
-    <script src="js/script.js"></script>
-</body>
+    <script src="./script.js"></script>
+  </body>
 </html>
